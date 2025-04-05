@@ -25,6 +25,8 @@ wheels/
 venv/
 ENV/
 env/
+node_modules/
+chromadb-env/
 
 # IDE
 .idea/
@@ -47,3 +49,5 @@ Thumbs.db
 
 #Dataset
 data/
+database/
+*.db
