@@ -1,98 +1,148 @@
 # GenAI Interactive Learning Games
 
-An educational game platform using Generative AI to create dynamic content, challenges, and adaptive learning experiences.
+An AI-powered educational platform featuring adaptive learning games with real-time progress tracking and dynamic content generation.
 
-## Features
+## 🚀 Features
 
-- **WordleAI**: AI-generated word puzzles that adapt to your vocabulary level
-- **Jigsaw Challenges**: Visual puzzles with educational content
-- **Adaptive Quizzes**: Questions that adjust difficulty based on performance
+- **WordleAI**: AI-generated word puzzles with adaptive difficulty
+  - Dynamic hint generation
+  - Player progress tracking
+  - Streak system and badges
 
-## Technical Architecture
+- **Adaptive Quiz Engine**
+  - AI-generated questions with Groq API fact-checking
+  - Difficulty adjustment based on performance
+  - ChromaDB-powered question similarity search
 
-- **Backend**: Node.js/Express
-- **Frontend**: React with TailwindCSS
-- **AI Models**: Integration with Ollama (local models) and OpenRouter/Hugging Face APIs
+- **Learning Analytics**
+  - Real-time leaderboard
+  - Skill progression tracking
+  - Performance-based badge system
+
+## 🛠 Technical Stack
+
+### Backend
+- **Runtime**: Node.js/Express
 - **Database**: SQLite with Sequelize ORM
+- **Vector DB**: ChromaDB for semantic search
+- **AI Integration**:
+  - Ollama (local models)
+  - Groq API (Llama 3 70B for fact-checking)
+  - Hugging Face/OpenRouter APIs
 
-## Prerequisites
+### Frontend
+- **Framework**: React 19
+- **Styling**: TailwindCSS
+- **State Management**: React Router, Context API
+- **Visualization**: Dynamic SVG components
 
-- Node.js 14+ and npm
-- Ollama (optional, for local AI model support)
+## ⚙️ Prerequisites
 
-## Installation
+- Node.js 18+
+- Python 3.8+ (for ChromaDB)
+- Ollama (optional for local AI)
+- ChromaDB server
 
-1. Clone the repository:
+## 🛠 Installation
 
-   ```bash
-   git clone https://github.com/yourusername/intel-unnati-ps2.git
-   cd intel-unnati-ps2
-   ```
+1. Clone repository:
+```
+git clone https://github.com/thakare-om03/intel-unnati-ps2.git
+cd intel-unnati-ps2
+```
 
 2. Install dependencies:
+```
+npm install
+```
 
-   ```bash
-   # Install server dependencies
-   npm install
+3. Set up ChromaDB:
+```
+setup-chromadb.bat
+```
 
-   # Install frontend dependencies
-   cd frontend
-   npm install
-   cd ..
-   ```
+4. Configure environment:
+```
+cp .env
+# Add your API keys in .env
+```
 
-3. Set environment variables:
-   - Copy `.env.example` to `.env` and set your API keys
+## 🖥 Running the Application
 
-## Running the Application
+Start services in order:
 
-### Option 1: Using start.bat (Windows)
+1. ChromaDB vector database:
+```
+start-chromadb.bat
+```
 
-```bash
+2. Backend server:
+```
+node server.js
+```
+
+3. Frontend development:
+```
+npm run dev
+```
+
+Or use the combined start script:
+```
 start.bat
 ```
 
-### Option 2: Manual startup
+Access endpoints:
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:3001`
+- ChromaDB: `http://localhost:8000`
 
-```bash
-# Terminal 1 - Start the backend
-npm run dev:server
-
-# Terminal 2 - Start the frontend
-npm run dev:frontend
-```
-
-The application will be available at:
-
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:3001
-
-## Project Structure
+## 🌐 Project Structure
 
 ```
 intel-unnati-ps2/
-├── frontend/              # React frontend application
-├── models/               # Sequelize database models
-├── routes/              # Express API routes
-├── server.js            # Express server entry point
-└── start.bat            # Windows startup script
+├── server.js               # Express backend entry
+├── frontend/               # React application
+├── models/                 # Sequelize database models
+├── routes/                 # API endpoints
+├── utils/                  # AI & database utilities
+├── chromadb/               # Vector database config
+└── public/                 # Static assets
 ```
 
-## Environment Variables
+## 🔒 Environment Variables
 
-```env
-PORT=3001                # Backend server port
-USE_OLLAMA=true         # Enable/disable Ollama integration
-OLLAMA_BASE_URL=        # Ollama API URL
-OLLAMA_MODEL=           # Default Ollama model
-HUGGING_FACE_API_KEY=   # Hugging Face API key
-OPENROUTER_API_KEY=     # OpenRouter API key
+```
+PORT=3001
+USE_OLLAMA=true
+OLLAMA_BASE_URL=http://localhost:11434
+VITE_GROQ_API_KEY=your_key_here
 ```
 
-## Contributing
+## 📈 Advanced Features
 
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -am 'Add new feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Submit a pull request
+### ChromaDB Integration
+- Stores quiz question embeddings
+- Semantic search for question generation
+- Word/hint vector storage
+```
+# Query similar questions
+curl http://localhost:3001/api/embeddings/similar?topic=biology
+```
+
+### Groq Fact-Checking
+- Real-time quiz answer validation
+- Error correction using Llama 3 70B
+- Configurable through `.env`
+
+## 🚀 Deployment
+
+1. Production build:
+```
+npm run build
+```
+
+2. Use PM2 for process management:
+```
+pm2 start server.js
+pm2 start start-chromadb.bat
+```
